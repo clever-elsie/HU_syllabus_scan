@@ -60,6 +60,20 @@ void print_full(const map<str,str>&s){
 	str c;cin>>c;
 }
 
+pair<int,bool> to_int(const string&s){
+	if(s.size()==0)return {0,false};
+	for(const auto&x:s)
+		if(x<'0'||'9'<x)return {0,false};
+	bool is_neg=s[0]=='-';
+	long long ret=0;
+	for(size_t i=is_neg;i<s.size();++i){
+		ret=ret*10+s[i]-'0';
+		if(ret>INT32_MAX)return {0,false};
+	}
+	if(is_neg)ret=-ret;
+	return {ret,true};
+}
+
 void interactive_select(v3<map<str,str>>&clist,int grade,int term){
 	bool loop=true;
 	vc<map<str,str>>L;
@@ -86,8 +100,9 @@ void interactive_select(v3<map<str,str>>&clist,int grade,int term){
 		cout<<grade+1<<"年 "<<terms[term]<<"\n";
 		cout<<"詳細を表示するにはIDを選択してください。\n";
 		cout<<"\tターム選択の画面に戻るにはIDの範囲外の数値を入力してください。"<<endl;
-		int id;cin>>id;
-		if(id<0||L.size()<=id)loop=false;
+		string s;cin>>s;
+		auto[id,ok]=to_int(s);
+		if(!ok||id<0||L.size()<=id)loop=false;
 		else print_full(L[id]);
 	}while(loop);
 }
@@ -99,7 +114,9 @@ void interactive_term(v3<map<str,str>>&clist,int grade){
 		cout<<"開講期間を入力してください\n";
 		cout<<"\t前期は12, 後期は34, 通年は1234と入れてください。\n";
 		cout<<"\tそれ以外を入力すると学年の選択画面に戻ります。"<<endl;
-		int term;cin>>term;
+		string s;cin>>s;
+		auto[term,ok]=to_int(s);
+		if(!ok)break;
 		int arg_term;
 		switch(term){
 			case 1234:arg_term=0;break;
@@ -120,8 +137,9 @@ void interactive(v3<map<str,str>>&clist){
 		system("clear");
 		cout<<"学年を入れてください。";
 		cout<<"\t1～4以外を入力すると終了します。"<<endl;
-		int grade;cin>>grade;
-		if(0<grade&&grade<5){
+		string s;cin>>s;
+		auto[grade,ok]=to_int(s);
+		if(ok&&0<grade&&grade<5){
 			interactive_term(clist,grade-1);
 		}else loop=false;
 	}while(loop);
