@@ -15,7 +15,7 @@
   + IDを入力するとその授業の詳細が表示される。
   + IDの範囲外の数字を入力するとまた学年、タームの選択に戻り無限ループ
   + 学年もタームも0を入力すると終了する
-## calc05unit.xlsx
+## calc05credit.xlsx
   05情科の学生便覧を人力写経して単位を計算するエクセルシート。  
   履修計画の立案なり、留年カウントダウンなり、好きに使ってください。  
   05以外の便覧とは恐らく授業の構成や時期が異なると思うので、それ以外の人は自分の便覧を見てね！！  
@@ -27,8 +27,7 @@
   1. pythonのインストール`sudo apt install python3 -y`
   1. pip,venvのインストール`sudo apt install python3-pip python3-venv`
   1. requests,beautifulsoup4のインストール
-    1. `python3 -m pip install requests`
-    1. `python3 -m pip install beautifulsoup4`
+    1. `python3 -m pip install requests beautifulsoup4`
 
 ## sudo apt update 失敗するとき
   1. `sudo rm /etc/resolv.conf`
